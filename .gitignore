@@ -1,0 +1,12 @@
+*.pyc
+__pycache__/
+data/*.json
+*.log
+.vscode/
+.idea/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
