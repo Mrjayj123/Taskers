@@ -77,11 +77,14 @@ graph TD
 - Pipenv (optional, for virtual environment management)
 
 ### Installation
-Clone or navigate to the project directory, then install the dependencies:
-```bash
+# Install pipenv (if not already installed)
+pip install pipenv
+
+# Install project dependencies
 pipenv install
-```
-*Note: If you run the code without installing dependencies, the CLI will automatically fallback to a built-in custom table formatter.*
+
+# Activate virtual environment
+pipenv shell
 
 ### Run the Application
 Execute the entry point script:
@@ -94,3 +97,23 @@ Run the unit test suite:
 ```bash
 python3 test_tracker.py
 ```
+# Print all usernames
+python3 -c "import json; data=json.load(open('data/tracker_data.json')); print('\n'.join([u['username'] for u in data['users']]))"
+
+# Print specific user details by name
+python3 -c "import json; data=json.load(open('data/tracker_data.json')); user=[u for u in data['users'] if u['username']=='alice']; print(user)"
+
+# Print all project names with their IDs
+python3 -c "import json; data=json.load(open('data/tracker_data.json')); [print(f\"{p['project_id']}: {p['name']}\") for p in data['projects']]"
+
+# Print user ID for a specific username
+python3 -c "import json; data=json.load(open('data/tracker_data.json')); user=[u for u in data['users'] if u['username']=='bob']; print(f\"Bob's ID: {user[0]['user_id']}\" if user else 'User not found')"
+
+# Print all tasks for a specific project
+python3 -c "import json; data=json.load(open('data/tracker_data.json')); project=[p for p in data['projects'] if p['project_id']=='a3f5k2m9']; [print(f\"{t['task_id']}: {t['title']} - {t['status']}\") for t in project[0]['tasks']] if project else print('Project not found')"
+
+# Print summary statistics
+python3 -c "import json; d=json.load(open('data/tracker_data.json')); print(f\"Users: {len(d['users'])}\"); print(f\"Projects: {len(d['projects'])}\"); tasks=sum(len(p.get('tasks',[])) for p in d['projects']); print(f\"Total Tasks: {tasks}\")"
+
+
+
