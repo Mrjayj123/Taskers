@@ -1,6 +1,5 @@
-"""
-CLI interface for Project Management System
-"""
+
+#CLI interface for Project Management System
 import sys
 try:
     from tabulate import tabulate

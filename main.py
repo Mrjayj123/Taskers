@@ -1,6 +1,4 @@
-"""
-Project Management System - Main Entry Point
-"""
+#Project Management System - Main Entry Point
 import sys
 import os
 

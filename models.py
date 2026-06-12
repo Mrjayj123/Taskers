@@ -1,7 +1,5 @@
-"""
-Models for Project Management System
-User -> Projects -> Tasks relationship
-"""
+#Models for Project Management System
+#User -> Projects -> Tasks relationship
 import json
 import os
 from datetime import datetime
@@ -19,7 +17,7 @@ class User:
         self.created_at = datetime.now().isoformat()
     
     def to_dict(self) -> Dict:
-        """Convert user to dictionary for JSON storage"""
+        #Converts user to dictionary for JSON storage
         return {
             "user_id": self.user_id,
             "username": self.username,
