@@ -70,50 +70,103 @@ graph TD
 
 ---
 
-## Setup & Running the Code
+## Commands Reference
+
+This section lists all the commands needed to install, run, test, and query the Project Management System.
 
 ### Prerequisites
-- Python 3.12+
-- Pipenv (optional, for virtual environment management)
+- **Python**: version `3.12+`
+- **Pipenv** (optional, recommended for virtual environments)
 
-### Installation
+### 1. Installation & Environment Setup
+
+#### Option A: Using Pipenv (Recommended)
+```bash
 # Install pipenv (if not already installed)
 pip install pipenv
 
 # Install project dependencies
 pipenv install
 
-# Activate virtual environment
+# Activate the virtual environment shell
 pipenv shell
+```
 
-### Run the Application
-Execute the entry point script:
+#### Option B: Using Standard pip
+If you prefer not to use `pipenv`, you can install dependencies using the standard `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 2. Running the Application
+
+After setting up your environment, run the main script to start the CLI loop:
+
+#### If virtual environment is activated:
 ```bash
 python3 main.py
 ```
 
-### Run Unit Tests
-Run the unit test suite:
+#### Running via Pipenv (without entering shell):
+```bash
+pipenv run python main.py
+```
+
+---
+
+### 3. Running Unit Tests
+
+To run the unit test suite:
+
+#### If virtual environment is activated:
 ```bash
 python3 test_tracker.py
 ```
-# Print all usernames
+
+#### Running via Pipenv (without entering shell):
+```bash
+pipenv run python test_tracker.py
+```
+
+#### Running with pytest (if installed):
+```bash
+pytest
+```
+
+---
+
+### 4. Database Query Utilities (JSON Queries)
+
+These Python one-liners allow you to directly inspect or query the JSON database file (`data/tracker_data.json`) from your shell:
+
+#### Print all usernames
+```bash
 python3 -c "import json; data=json.load(open('data/tracker_data.json')); print('\n'.join([u['username'] for u in data['users']]))"
+```
 
-# Print specific user details by name
+#### Print specific user details by username (e.g., 'alice')
+```bash
 python3 -c "import json; data=json.load(open('data/tracker_data.json')); user=[u for u in data['users'] if u['username']=='alice']; print(user)"
+```
 
-# Print all project names with their IDs
+#### Print all project names with their IDs
+```bash
 python3 -c "import json; data=json.load(open('data/tracker_data.json')); [print(f\"{p['project_id']}: {p['name']}\") for p in data['projects']]"
+```
 
-# Print user ID for a specific username
+#### Print user ID for a specific username (e.g., 'bob')
+```bash
 python3 -c "import json; data=json.load(open('data/tracker_data.json')); user=[u for u in data['users'] if u['username']=='bob']; print(f\"Bob's ID: {user[0]['user_id']}\" if user else 'User not found')"
+```
 
-# Print all tasks for a specific project
+#### Print all tasks for a specific project ID (e.g., 'a3f5k2m9')
+```bash
 python3 -c "import json; data=json.load(open('data/tracker_data.json')); project=[p for p in data['projects'] if p['project_id']=='a3f5k2m9']; [print(f\"{t['task_id']}: {t['title']} - {t['status']}\") for t in project[0]['tasks']] if project else print('Project not found')"
+```
 
-# Print summary statistics
+#### Print summary database statistics
+```bash
 python3 -c "import json; d=json.load(open('data/tracker_data.json')); print(f\"Users: {len(d['users'])}\"); print(f\"Projects: {len(d['projects'])}\"); tasks=sum(len(p.get('tasks',[])) for p in d['projects']); print(f\"Total Tasks: {tasks}\")"
-
-
-
+```
